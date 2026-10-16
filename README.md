@@ -14,7 +14,7 @@ Keep this command running while you use the local site. To stop it, press `Ctrl+
 
 ## What to try
 
-- Search fictional Toronto charging locations and filter by neighbourhood, hourly price, charger speed, and availability.
+- Search the five user-provided North York and Scarborough addresses. Filter by neighbourhood, hourly price, charger speed, and demo availability.
 - Select a map pin or location card to choose a date, start time, and overnight window. The estimated total updates as you make selections.
 - Confirm a demo reservation, review it under **My bookings**, and cancel it. Bookings are stored in this browser's local storage; no account, payment, or backend is involved.
 - Browse **City insights** for clearly labelled fictional planning data and **How it works** for the concept overview.
@@ -24,7 +24,7 @@ The hourly location rate is the charging fee; each overnight reservation also ha
 
 ## Demo disclaimer
 
-All locations, addresses, rates, availability, reservations, neighbourhood insights, and possible host sites are fictional and illustrative. The map is an original schematic preview, not live map data. This project is not officially affiliated with Green P, the City of Toronto, TDSB, or TCDSB.
+The five map addresses were supplied for this prototype; pin coordinates are approximate and based on OpenStreetMap geocoding. The map illustration is schematic, not live road or parking data. The named properties have not been confirmed as EV charging sites or partners, and no access is implied. Rates, charger types, availability, reservations, neighbourhood insights, and potential host sites are fictional demo data. Geocoding attribution: [© OpenStreetMap contributors](https://www.openstreetmap.org/copyright). This project is not officially affiliated with Green P, the City of Toronto, TDSB, or TCDSB.
 
 ## Checks
 

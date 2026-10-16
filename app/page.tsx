@@ -140,61 +140,36 @@ function MapPreview({
   onSelect: (id: string) => void;
 }) {
   return (
-    <div className="map-panel" aria-label="Illustrated map of fictional Toronto charging locations">
+    <div className="map-panel" aria-label="Schematic map showing the provided addresses in North York and Scarborough">
       <svg
         className="map-art"
         viewBox="0 0 760 530"
-        preserveAspectRatio="xMidYMid slice"
+        preserveAspectRatio="none"
         role="img"
         aria-labelledby="map-title"
       >
-        <title id="map-title">Illustrated demo map of Toronto neighbourhoods</title>
-        <rect width="760" height="530" fill="#e9efe8" />
-        <path
-          d="M0 0h760v115c-75 28-127-21-203 4-68 22-97 70-168 53-86-20-114-71-205-36C111 163 63 187 0 163z"
-          fill="#e2ebdf"
-        />
-        <path d="M0 386c111-28 167 19 273 8 97-10 164-58 270-33 74 17 130 69 217 53v116H0z" fill="#cfe3e5" />
-        <path
-          d="M-15 285C125 243 180 279 306 239c110-35 164-104 303-92 61 5 115 32 172 17"
-          fill="none"
-          stroke="#fff"
-          strokeWidth="16"
-        />
-        <path
-          d="M43-30c45 111 5 185 48 272 35 71 92 99 87 204M258-24c-15 79 32 124 21 194-11 72-61 127-27 241M455-24c-58 76-14 152 6 225 21 76-14 124-1 229M652-8c-75 95-35 178 3 248 32 59 13 119-1 230"
-          fill="none"
-          stroke="#fff"
-          strokeWidth="13"
-        />
-        <path
-          d="M-20 89c112 39 185 0 280 21 70 15 119 58 198 40 84-19 151-57 324-17M-8 193c88-24 166 18 252 9 94-10 148-67 241-51 90 15 169 61 294 40M-9 338c115-16 201 27 297 7 122-27 184-80 295-52 63 16 105 53 195 43"
-          fill="none"
-          stroke="#fff"
-          strokeWidth="10"
-        />
-        <path
-          d="M-15 285C125 243 180 279 306 239c110-35 164-104 303-92 61 5 115 32 172 17"
-          fill="none"
-          stroke="#d9dfd7"
-          strokeWidth="1.5"
-          strokeDasharray="7 8"
-        />
-        <text x="30" y="45" className="map-label map-label-small">TORONTO · ONTARIO</text>
-        <text x="83" y="228" className="map-label">THE JUNCTION</text>
-        <text x="46" y="344" className="map-label">BLOOR WEST</text>
-        <text x="397" y="190" className="map-label">THE ANNEX</text>
-        <text x="275" y="357" className="map-label">PARKDALE</text>
-        <text x="579" y="262" className="map-label">LESLIEVILLE</text>
-        <text x="542" y="345" className="map-label">RIVERDALE</text>
-        <text x="390" y="465" className="map-water-label">LAKE ONTARIO</text>
-        <g transform="translate(668 60)">
+        <title id="map-title">Schematic map of five user-provided North York and Scarborough addresses</title>
+        <rect width="760" height="530" fill="#eaf0e8" />
+        <path d="M0 0h760v530H0z" fill="#eaf0e8" />
+        <path d="M45 30h105l25 54-22 39H50zM268 342l78-31 42 43-31 61-87 9-27-39zM574 86l107-26 34 40-23 57-101 8-37-36zM598 353l97-18 34 62-46 61-87-18-24-44z" fill="#dce8d6" />
+        <path d="M20 172c96-35 174-34 251-8s145 28 226 0 155-36 249-2M-5 278c104-25 193-19 271 8s160 22 241-8 155-30 271-4M4 414c100-28 181-28 264-4s163 26 247-1 153-31 253-9" fill="none" stroke="#fff" strokeWidth="15" />
+        <path d="M164-20c-22 85-25 157 1 226s21 149-9 213-28 94-7 146M349-20c-25 80-31 158-4 229s32 145 6 211-29 107-8 147M540-19c-28 89-27 159 2 225s32 139 4 208-28 101-8 151M704-19c-23 84-20 152 7 220s31 142 7 207-19 111-2 155" fill="none" stroke="#fff" strokeWidth="13" />
+        <path d="M-20 83c105 18 197 17 279-7s161-25 244-3 166 24 281 1M-14 224c103 17 196 17 282-6s163-21 246 1 164 24 277 1M-8 350c110 20 203 19 287-5s163-23 248 0 163 25 261 5M0 474c108 17 199 18 286-4s164-21 246 1 160 22 248 1" fill="none" stroke="#fff" strokeWidth="7" />
+        <path d="M0 117c93 27 176 18 252-4m-76 285c93-17 145-55 182-114m123 241c29-56 37-103 19-153" fill="none" stroke="#fff" strokeWidth="5" />
+        <path d="M40 244c117-25 197-18 278 4s156 22 245-7 133-27 219-8M165 0c-20 85-20 160 4 224s20 149-13 210M352 0c-25 82-27 155 0 224s32 144 3 211M541 0c-26 84-24 158 4 224s31 144 3 211" fill="none" stroke="#d8dfd5" strokeWidth="1.4" strokeDasharray="6 7" />
+        <text x="28" y="68" className="map-label map-label-small">TORONTO · NORTH YORK &amp; SCARBOROUGH</text>
+        <text x="224" y="105" className="map-label">HILLCREST VILLAGE</text>
+        <text x="26" y="323" className="map-label">YORK UNIVERSITY HEIGHTS</text>
+        <text x="566" y="180" className="map-label">AGINCOURT NORTH</text>
+        <text x="620" y="300" className="map-label">AGINCOURT</text>
+        <text x="658" y="473" className="map-label">WOBURN</text>
+        <g transform="translate(710 75)">
           <path d="M0 19 8 0l8 19-8-5z" fill="#76917d" />
           <text x="8" y="32" textAnchor="middle" className="map-north">N</text>
         </g>
       </svg>
       <div className="map-topline">
-        <span className="map-live"><span /> DEMO MAP</span>
+        <span className="map-live"><span /> APPROXIMATE ADDRESS PINS</span>
         <button
           className="map-locate"
           type="button"
@@ -202,7 +177,7 @@ function MapPreview({
           disabled={visibleLocations.length === 0}
           aria-label="Focus the first visible charging location"
         >
-          <Navigation size={14} /> Nearby
+          <Navigation size={14} /> First spot
         </button>
       </div>
       {visibleLocations.map((location) => (
@@ -220,8 +195,8 @@ function MapPreview({
         </button>
       ))}
       <div className="map-legend">
-        <span className="legend-dot" /> Available tonight
-        <span className="legend-fictional"><Sparkles size={12} /> Fictional map</span>
+        <span className="legend-dot" /> Demo availability
+        <span className="legend-fictional"><Sparkles size={12} /> Schematic map</span>
       </div>
       {selectedId && getLocation(selectedId) && (
         <button
@@ -267,7 +242,7 @@ function LocationCard({
           </span>
           <span className="address-line"><MapPin size={13} /> {location.address}</span>
           <span className="location-meta">
-            <span><span className="available-dot" /> {location.available} spots</span>
+            <span><span className="available-dot" /> {location.available} demo spots</span>
             <span><Zap size={13} /> {location.speed}</span>
           </span>
         </span>
@@ -295,7 +270,7 @@ export default function Home() {
   const [speed, setSpeed] = useState("Any speed");
   const [maxPrice, setMaxPrice] = useState(3);
   const [availableOnly, setAvailableOnly] = useState(false);
-  const [selectedId, setSelectedId] = useState("junction-hall");
+  const [selectedId, setSelectedId] = useState("ay-jackson");
   const [bookingId, setBookingId] = useState<string | null>(null);
   const [bookingDate, setBookingDate] = useState("");
   const [bookingStart, setBookingStart] = useState("21:00");
@@ -546,9 +521,9 @@ export default function Home() {
               <div>
                 <span className="eyebrow">A SPOT FOR TONIGHT</span>
                 <h2 id="explore-heading">Find your overnight charge</h2>
-                <p>Real close. Really simple. Tap a pin to see a spot.</p>
+                <p>Five provided addresses across North York and Scarborough. Tap a pin to see demo details.</p>
               </div>
-              <span className="fictional-note"><Sparkles size={14} /> Fictional demo locations</span>
+              <span className="fictional-note"><Sparkles size={14} /> Provided addresses · Demo details</span>
             </div>
             <div className="search-toolbar">
               <label className="search-field">
@@ -596,14 +571,14 @@ export default function Home() {
               <label className="available-filter">
                 <input type="checkbox" checked={availableOnly} onChange={(event) => setAvailableOnly(event.target.checked)} />
                 <span className="toggle-track"><span /></span>
-                <span>Available</span>
+                <span>Demo availability</span>
               </label>
             </div>
 
             <div className="explore-grid">
               <div className="list-pane">
                 <div className="list-toolbar">
-                  <span><b>{filteredLocations.length}</b> spots nearby</span>
+                  <span><b>{filteredLocations.length}</b> demo sites</span>
                   <span className="sort-label"><Filter size={13} /> Sort: <b>Recommended</b></span>
                 </div>
                 <div className="location-list" aria-live="polite">
@@ -636,7 +611,7 @@ export default function Home() {
                     </div>
                   )}
                 </div>
-                <p className="list-footnote"><ShieldCheck size={14} /> Every spot has a reserved overnight window.</p>
+                <p className="list-footnote"><ShieldCheck size={14} /> Demo reservations use the 7:00 AM parking cutoff.</p>
               </div>
               <MapPreview
                 visibleLocations={filteredLocations}
@@ -829,7 +804,7 @@ export default function Home() {
           <p>Charge a little closer to home.<br />A neighbourhood charging concept for Toronto.</p>
           <button type="button" className="footer-how" onClick={() => selectSection("how")}>How it works <ArrowUpRight size={14} /></button>
         </div>
-        <div className="disclaimer"><ShieldCheck size={16} /><p><b>Prototype disclaimer</b> This project is a fictional, simulated demo. Locations, prices, availability, bookings, neighbourhood metrics, and potential sites are illustrative—not real listings, endorsements, or partnerships. Bookings are simulated and saved in your browser only. Not officially affiliated with Green P, the City of Toronto, TDSB, or TCDSB.</p></div>
+        <div className="disclaimer"><ShieldCheck size={16} /><p><b>Prototype disclaimer</b> The five addresses were provided for this prototype, and pins are approximate. The map is schematic—not live road or parking data. The named sites have not been confirmed as EV charging hosts. Rates, charger types, availability, bookings, neighbourhood metrics, and potential sites are demo data only; no host partnership or access is implied. Bookings are simulated and saved in your browser only. Address pin geocoding: <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">© OpenStreetMap contributors</a>. Not officially affiliated with Green P, the City of Toronto, TDSB, or TCDSB.</p></div>
         <div className="footer-bottom"><span>© 2025 ChargeTO concept · Toronto, ON</span><span>Made for a city that never stops moving <ArrowDownRight size={13} /></span></div>
       </footer>
 
@@ -840,7 +815,7 @@ export default function Home() {
           <section className="booking-modal" role="dialog" aria-modal="true" aria-labelledby="booking-title">
             <div className="modal-topline"><span className="eyebrow"><span className="pulse-dot" /> RESERVE A DEMO SPOT</span><button className="icon-button" type="button" onClick={() => setBookingId(null)} aria-label="Close reservation"><X size={19} /></button></div>
             <div className="modal-title-row"><div><h2 id="booking-title">{selectedLocation.name}</h2><p><MapPin size={14} /> {selectedLocation.address} · {selectedLocation.neighbourhood}</p></div><span className="modal-price"><b>{formatMoney(selectedLocation.rate)}</b><small> / charge hour</small></span></div>
-            <div className="modal-charger-info"><span><PlugZap size={15} /> {selectedLocation.speed}</span><span><span className="available-dot" /> {selectedLocation.available} spots shown</span><span>{selectedLocation.connector}</span></div>
+            <div className="modal-charger-info"><span><PlugZap size={15} /> {selectedLocation.speed}</span><span><span className="available-dot" /> {selectedLocation.available} demo spots</span><span>{selectedLocation.connector}</span></div>
             <div className="booking-form">
               <label className="field-label" htmlFor="booking-date"><span><CalendarDays size={15} /> Pick a night</span></label>
               <input id="booking-date" className="booking-input" type="date" min={today || undefined} value={bookingDate} onChange={(event) => setBookingDate(event.target.value)} />
