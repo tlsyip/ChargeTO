@@ -495,7 +495,7 @@ export default function Home() {
               <div className="hero-proof">
                 <span><CheckCircle2 size={15} /> Close to home</span>
                 <span><CheckCircle2 size={15} /> No subscriptions</span>
-                <span><CheckCircle2 size={15} /> Charging from $1.50 / hr</span>
+                <span><CheckCircle2 size={15} /> Charging from $1.75 / hr</span>
               </div>
             </div>
             <div className="hero-art" aria-hidden="true">
