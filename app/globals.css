@@ -85,37 +85,27 @@ button:disabled {
 
 .brand {
   display: inline-flex;
-  gap: 10px;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
   padding: 0;
   border: 0;
   background: transparent;
   color: var(--forest-dark);
   cursor: pointer;
   text-align: left;
-  font-size: 21px;
-  font-weight: 750;
-  letter-spacing: -1.15px;
   line-height: 1;
 }
 
-.brand-mark {
-  width: 37px;
-  height: 37px;
-  border-radius: 12px;
-  display: grid;
-  place-items: center;
-  color: white;
-  background: var(--forest);
-}
-
-.brand-period {
-  color: #93bb7b;
-}
-
-.brand small {
+.brand-logo {
   display: block;
-  margin-top: 5px;
+  width: 136px;
+  height: auto;
+}
+
+.brand-tagline {
+  display: block;
+  margin-left: 2px;
   color: #839087;
   font-size: 7px;
   font-weight: 650;
@@ -2153,17 +2143,7 @@ button:disabled {
 }
 
 .footer-brand {
-  font-size: 17px;
-}
-
-.footer-brand .brand-mark {
-  width: 32px;
-  height: 32px;
-  border-radius: 10px;
-}
-
-.footer-brand small {
-  font-size: 7px;
+  flex: 0 0 auto;
 }
 
 .footer-main > p {
@@ -2994,12 +2974,7 @@ button:disabled {
   }
 
   .brand {
-    font-size: 19px;
-  }
-
-  .brand-mark {
-    width: 34px;
-    height: 34px;
+    max-width: 145px;
   }
 
   .hero {

@@ -27,7 +27,9 @@ import {
   X,
   Zap,
 } from "lucide-react";
+import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
+import chargeToLogo from "./chargeto-logo.png";
 import {
   bookingConflicts,
   approvedParkingEnd,
@@ -40,7 +42,7 @@ import {
   type Location,
 } from "./data";
 
-type Section = "explore" | "bookings" | "insights" | "how";
+type Section = "explore" | "bookings" | "how";
 type Notice = { message: string; kind: "success" | "error" } | null;
 
 const STORAGE_KEY = "nightshift-bookings-v1";
@@ -433,7 +435,6 @@ export default function Home() {
   const navItems: { id: Section; label: string }[] = [
     { id: "explore", label: "Explore" },
     { id: "bookings", label: "My bookings" },
-    { id: "insights", label: "City insights" },
     { id: "how", label: "How it works" },
   ];
 
@@ -442,8 +443,8 @@ export default function Home() {
       <header className="site-header">
         <div className="header-inner">
           <button className="brand" type="button" onClick={() => selectSection("explore")} aria-label="ChargeTO home">
-            <span className="brand-mark"><BatteryCharging size={20} strokeWidth={2.3} /></span>
-            <span>Charge<span className="brand-period">TO</span><small>A Charge Closer To Home</small></span>
+            <Image className="brand-logo" src={chargeToLogo} alt="" priority />
+            <span className="brand-tagline">A Charge Closer To Home</span>
           </button>
           <nav className="desktop-nav" aria-label="Main navigation">
             {navItems.map((item) => (
@@ -476,7 +477,6 @@ export default function Home() {
             >
               {item.id === "explore" && <Search size={15} />}
               {item.id === "bookings" && <CalendarDays size={15} />}
-              {item.id === "insights" && <Sparkles size={15} />}
               {item.id === "how" && <Menu size={15} />}
               {item.label}
               {item.id === "bookings" && activeBookings.length > 0 && <span>({activeBookings.length})</span>}
@@ -698,66 +698,6 @@ export default function Home() {
         </section>
       )}
 
-      {section === "insights" && (
-        <section className="page-section insight-page">
-          <SectionTitle
-            eyebrow="A MORE CHARGEABLE CITY"
-            title="Room to grow"
-            detail="A little data can point to a much better night’s charge."
-          />
-          <div className="demo-banner"><Sparkles size={16} /><span><b>Fictional planning demo.</b> Every neighbourhood, metric, and projection below is invented for this prototype—not municipal research.</span></div>
-          <div className="insight-intro">
-            <div><span className="eyebrow">THE OPPORTUNITY</span><h3>More curbside charging<br />starts with the spaces we have.</h3><p>Our concept matches apartment-dense areas with underused overnight parking. No new lot required—just a smarter use of existing space.</p></div>
-            <div className="insight-big-stat"><span className="stat-orbit"><PlugZap size={24} /></span><b>3.2×</b><small>more potential overnight capacity<br />in these sample areas</small><em>ILLUSTRATIVE ONLY</em></div>
-          </div>
-          <div className="insight-grid">
-            <article className="insight-chart-card">
-              <div className="insight-card-title"><div><span className="eyebrow">DEMO NEIGHBOURHOOD INDEX</span><h3>Where the need is</h3></div><span className="fictional-tag">FICTIONAL DATA</span></div>
-              <p className="chart-explainer">Illustrative renter density compared with overnight charger availability.</p>
-              <div className="chart-legend"><span><i className="legend-renters" /> Apartment households</span><span><i className="legend-chargers" /> Charger coverage</span></div>
-              <div className="bar-chart">
-                {[
-                  { name: "Rexdale", need: 87, supply: 20, tag: "High need" },
-                  { name: "East York", need: 71, supply: 33, tag: "High need" },
-                  { name: "Parkdale", need: 64, supply: 44, tag: "Growing" },
-                  { name: "The Annex", need: 57, supply: 68, tag: "On the rise" },
-                ].map((row) => (
-                  <div className="bar-row" key={row.name}>
-                    <span className="bar-name">{row.name}<small>{row.tag}</small></span>
-                    <div className="bar-track"><span className="bar-fill need-fill" style={{ width: `${row.need}%` }} /><span className="bar-fill supply-fill" style={{ width: `${row.supply}%` }} /></div>
-                    <span className="bar-gap">{row.need - row.supply}pt gap</span>
-                  </div>
-                ))}
-              </div>
-              <small className="chart-source">Sample index only · no official data source · invented for this prototype</small>
-            </article>
-            <article className="opportunity-card">
-              <div className="insight-card-title"><div><span className="eyebrow">POTENTIAL HOSTS</span><h3>Good spaces, nearby</h3></div><span className="host-icon"><MapPin size={17} /></span></div>
-              <p className="chart-explainer">Example lots that could be explored for overnight use.</p>
-              {[
-                { area: "Rexdale", host: "Community recreation lot", slots: "12 potential spots", icon: "01" },
-                { area: "East York", host: "Neighbourhood retail plaza", slots: "8 potential spots", icon: "02" },
-                { area: "Parkdale", host: "School-adjacent parking", slots: "16 potential spots", icon: "03" },
-              ].map((item) => (
-                <div className="host-row" key={item.area}>
-                  <span className="host-number">{item.icon}</span>
-                  <span className="host-row-content"><b>{item.host}</b><small>{item.area} · {item.slots}</small></span>
-                  <ArrowUpRight size={15} />
-                </div>
-              ))}
-              <div className="host-disclaimer"><ShieldCheck size={15} /> These are fictional examples, not actual host partnerships or site assessments.</div>
-            </article>
-          </div>
-          <div className="impact-strip">
-            <div><span>01</span><b>Start with the gap</b><small>Prioritize apartment-dense blocks</small></div>
-            <ArrowRight size={17} />
-            <div><span>02</span><b>Partner locally</b><small>Explore underused evening lots</small></div>
-            <ArrowRight size={17} />
-            <div><span>03</span><b>Keep it neighbourly</b><small>Charge close to where people live</small></div>
-          </div>
-        </section>
-      )}
-
       {section === "how" && (
         <section className="page-section how-page">
           <SectionTitle
@@ -798,8 +738,8 @@ export default function Home() {
       <footer className="site-footer">
         <div className="footer-main">
           <button className="brand footer-brand" type="button" onClick={() => selectSection("explore")} aria-label="ChargeTO home">
-            <span className="brand-mark"><BatteryCharging size={19} strokeWidth={2.3} /></span>
-            <span>Charge<span className="brand-period">TO</span><small>A Charge Closer To Home</small></span>
+            <Image className="brand-logo" src={chargeToLogo} alt="" />
+            <span className="brand-tagline">A Charge Closer To Home</span>
           </button>
           <p>Charge a little closer to home.<br />A neighbourhood charging concept for Toronto.</p>
           <button type="button" className="footer-how" onClick={() => selectSection("how")}>How it works <ArrowUpRight size={14} /></button>
