@@ -745,7 +745,7 @@ export default function Home() {
           <button type="button" className="footer-how" onClick={() => selectSection("how")}>How it works <ArrowUpRight size={14} /></button>
         </div>
         <div className="disclaimer"><ShieldCheck size={16} /><p><b>Prototype disclaimer</b> The five addresses were provided for this prototype, and pins are approximate. The map is schematic—not live road or parking data. The named sites have not been confirmed as EV charging hosts. Rates, charger types, availability, bookings, neighbourhood metrics, and potential sites are demo data only; no host partnership or access is implied. Bookings are simulated and saved in your browser only. Address pin geocoding: <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">© OpenStreetMap contributors</a>. Not officially affiliated with Green P, the City of Toronto, TDSB, or TCDSB.</p></div>
-        <div className="footer-bottom"><span>© 2025 ChargeTO concept · Toronto, ON</span><span>Made for a city that never stops moving <ArrowDownRight size={13} /></span></div>
+        <div className="footer-bottom"><span>© 2026 ChargeTO concept · Toronto, ON</span><span>Made for a city that never stops moving <ArrowDownRight size={13} /></span></div>
       </footer>
 
       {bookingId && selectedLocation && (
