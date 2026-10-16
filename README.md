@@ -20,6 +20,7 @@ Keep this command running while you use the local site. To stop it, press `Ctrl+
 - Browse **City insights** for clearly labelled fictional planning data and **How it works** for the concept overview.
 
 Overlapping time windows at the same location are blocked. Reservations are simulated and saved on this device only.
+The hourly location rate is the charging fee; each overnight reservation also has a flat $1.75 demo parking fee. Parking is reserved through 7:00 AM. A conditional idle fee of $0.50 per minute applies from 7:01 AM if a vehicle remains after the approved window; this potential fee is disclosed before booking and is not included in the estimate.
 
 ## Demo disclaimer
 

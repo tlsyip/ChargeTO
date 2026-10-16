@@ -2417,6 +2417,68 @@ button:disabled {
   font-weight: 650;
 }
 
+.parking-window-notice {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 7px;
+  padding: 8px 10px;
+  border: 1px solid #e8ede3;
+  border-radius: 5px;
+  background: #fbfcf9;
+  color: #77857a;
+  font-size: 9px;
+}
+
+.parking-window-notice svg {
+  flex: 0 0 auto;
+  color: #7b9278;
+}
+
+.parking-window-notice b {
+  color: #4c694f;
+  font-weight: 650;
+}
+
+.idle-fee-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid #eadfca;
+  border-radius: 5px;
+  background: #fbf8f0;
+}
+
+.idle-fee-icon {
+  display: grid;
+  width: 25px;
+  height: 25px;
+  flex: 0 0 25px;
+  place-items: center;
+  border-radius: 6px;
+  background: #f3ead8;
+  color: #927342;
+}
+
+.idle-fee-notice > span:last-child {
+  display: grid;
+  gap: 4px;
+}
+
+.idle-fee-notice b {
+  color: #6f5933;
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.idle-fee-notice small {
+  color: #82765d;
+  font-size: 8px;
+  line-height: 1.55;
+}
+
 .conflict-message {
   display: flex;
   align-items: flex-start;
@@ -2452,6 +2514,20 @@ button:disabled {
 
 .price-breakdown > div > span:last-child {
   color: #5b6c60;
+  text-align: right;
+}
+
+.price-breakdown .idle-fee-row {
+  align-items: flex-start;
+  gap: 10px;
+  color: #8a7654;
+  font-size: 8px;
+  line-height: 1.5;
+}
+
+.price-breakdown .idle-fee-row > span:last-child {
+  color: #8a7654;
+  white-space: nowrap;
 }
 
 .price-total {

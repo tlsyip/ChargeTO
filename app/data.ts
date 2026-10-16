@@ -116,23 +116,41 @@ export const neighbourhoods = [
 ];
 
 export const timeSlots = ["19:00", "20:00", "21:00", "22:00"];
+export const approvedParkingEnd = "07:00";
+export const minimumChargingHours = 8;
+
+export function getChargingDurations(start: string) {
+  const startHour = Number(start.slice(0, 2));
+  const hoursUntilParkingEnds = (24 - startHour) + Number(approvedParkingEnd.slice(0, 2));
+  return Array.from(
+    { length: Math.max(0, hoursUntilParkingEnds - minimumChargingHours + 1) },
+    (_, index) => minimumChargingHours + index,
+  );
+}
 
 export function getLocation(locationId: string) {
   return locations.find((location) => location.id === locationId);
 }
 
+function parkingReservationEnd(date: string, start: string) {
+  const endDate = new Date(`${date}T${start}:00`);
+  endDate.setDate(endDate.getDate() + 1);
+  endDate.setHours(Number(approvedParkingEnd.slice(0, 2)), 0, 0, 0);
+  return endDate.getTime();
+}
+
 export function bookingConflicts(
-  booking: Pick<Booking, "locationId" | "date" | "start" | "hours">,
+  booking: Pick<Booking, "locationId" | "date" | "start">,
   existing: Booking[],
   exceptId?: string,
 ) {
   const start = new Date(`${booking.date}T${booking.start}:00`).getTime();
-  const end = start + booking.hours * 60 * 60 * 1000;
+  const end = parkingReservationEnd(booking.date, booking.start);
 
   return existing.some((item) => {
     if (item.id === exceptId || item.locationId !== booking.locationId) return false;
     const otherStart = new Date(`${item.date}T${item.start}:00`).getTime();
-    const otherEnd = otherStart + item.hours * 60 * 60 * 1000;
+    const otherEnd = parkingReservationEnd(item.date, item.start);
     return start < otherEnd && otherStart < end;
   });
 }

@@ -30,6 +30,8 @@ import {
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   bookingConflicts,
+  approvedParkingEnd,
+  getChargingDurations,
   getLocation,
   locations,
   neighbourhoods,
@@ -42,8 +44,8 @@ type Section = "explore" | "bookings" | "insights" | "how";
 type Notice = { message: string; kind: "success" | "error" } | null;
 
 const STORAGE_KEY = "nightshift-bookings-v1";
-const bookingFee = 1.75;
-const durations = [8, 10, 12];
+const parkingFee = 1.75;
+const idleFeePerMinute = 0.5;
 
 function todayString() {
   const now = new Date();
@@ -100,7 +102,7 @@ function validBookings(value: unknown): value is Booking[] {
         /^\d{4}-\d{2}-\d{2}$/.test(item.date) &&
         typeof item?.start === "string" &&
         timeSlots.includes(item.start) &&
-        durations.includes(item?.hours) &&
+        [8, 9, 10, 11, 12].includes(item?.hours) &&
         typeof item?.total === "number" &&
         Number.isFinite(item.total) &&
         item.total >= 0 &&
@@ -210,7 +212,7 @@ function MapPreview({
           className={`map-marker ${selectedId === location.id ? "is-selected" : ""}`}
           style={{ left: `${location.x}%`, top: `${location.y}%` }}
           onClick={() => onSelect(location.id)}
-          aria-label={`${location.name}, ${formatMoney(location.rate)} per hour`}
+          aria-label={`${location.name}, ${formatMoney(location.rate)} per charging hour`}
           aria-pressed={selectedId === location.id}
         >
           <PlugZap size={15} />
@@ -261,7 +263,7 @@ function LocationCard({
         <span className="location-card-content">
           <span className="location-heading">
             <strong>{location.name}</strong>
-            <span className="price"><b>{formatMoney(location.rate)}</b><small>/ hr</small></span>
+            <span className="price"><b>{formatMoney(location.rate)}</b><small>/ charge hr</small></span>
           </span>
           <span className="address-line"><MapPin size={13} /> {location.address}</span>
           <span className="location-meta">
@@ -389,14 +391,12 @@ export default function Home() {
           locationId: selectedLocation.id,
           date: bookingDate,
           start: bookingStart,
-          hours: bookingHours,
         },
         bookings,
       )
     : false;
-  const estimatedTotal = selectedLocation
-    ? selectedLocation.rate * bookingHours + bookingFee
-    : 0;
+  const chargingCost = selectedLocation ? selectedLocation.rate * bookingHours : 0;
+  const estimatedTotal = chargingCost + parkingFee;
 
   function saveBookings(nextBookings: Booking[]) {
     try {
@@ -520,7 +520,7 @@ export default function Home() {
               <div className="hero-proof">
                 <span><CheckCircle2 size={15} /> Close to home</span>
                 <span><CheckCircle2 size={15} /> No subscriptions</span>
-                <span><CheckCircle2 size={15} /> From $1.50 / hr</span>
+                <span><CheckCircle2 size={15} /> Charging from $1.50 / hr</span>
               </div>
             </div>
             <div className="hero-art" aria-hidden="true">
@@ -584,7 +584,7 @@ export default function Home() {
               <label className="price-filter">
                 <span><SlidersHorizontal size={14} /> Up to <b>{formatMoney(maxPrice)}</b>/hr</span>
                 <input
-                  aria-label="Maximum hourly price"
+                  aria-label="Maximum hourly charging price"
                   type="range"
                   min="1.5"
                   max="3"
@@ -839,30 +839,46 @@ export default function Home() {
         }}>
           <section className="booking-modal" role="dialog" aria-modal="true" aria-labelledby="booking-title">
             <div className="modal-topline"><span className="eyebrow"><span className="pulse-dot" /> RESERVE A DEMO SPOT</span><button className="icon-button" type="button" onClick={() => setBookingId(null)} aria-label="Close reservation"><X size={19} /></button></div>
-            <div className="modal-title-row"><div><h2 id="booking-title">{selectedLocation.name}</h2><p><MapPin size={14} /> {selectedLocation.address} · {selectedLocation.neighbourhood}</p></div><span className="modal-price"><b>{formatMoney(selectedLocation.rate)}</b><small> / hour</small></span></div>
+            <div className="modal-title-row"><div><h2 id="booking-title">{selectedLocation.name}</h2><p><MapPin size={14} /> {selectedLocation.address} · {selectedLocation.neighbourhood}</p></div><span className="modal-price"><b>{formatMoney(selectedLocation.rate)}</b><small> / charge hour</small></span></div>
             <div className="modal-charger-info"><span><PlugZap size={15} /> {selectedLocation.speed}</span><span><span className="available-dot" /> {selectedLocation.available} spots shown</span><span>{selectedLocation.connector}</span></div>
             <div className="booking-form">
               <label className="field-label" htmlFor="booking-date"><span><CalendarDays size={15} /> Pick a night</span></label>
               <input id="booking-date" className="booking-input" type="date" min={today || undefined} value={bookingDate} onChange={(event) => setBookingDate(event.target.value)} />
               <div className="booking-field-row">
                 <label><span className="field-label"><Clock3 size={15} /> Start time</span>
-                  <select className="booking-input" value={bookingStart} onChange={(event) => setBookingStart(event.target.value)}>
+                  <select className="booking-input" value={bookingStart} onChange={(event) => {
+                    const nextStart = event.target.value;
+                    const nextDurations = getChargingDurations(nextStart);
+                    setBookingStart(nextStart);
+                    if (!nextDurations.includes(bookingHours) && nextDurations.length > 0) {
+                      setBookingHours(nextDurations[nextDurations.length - 1]);
+                    }
+                  }}>
                     {timeSlots.map((time) => <option key={time} value={time}>{formatTime(time)}</option>)}
                   </select>
                 </label>
-                <label><span className="field-label"><CloudMoon size={15} /> Overnight window</span>
+                <label><span className="field-label"><CloudMoon size={15} /> Charge duration</span>
                   <select className="booking-input" value={bookingHours} onChange={(event) => setBookingHours(Number(event.target.value))}>
-                    {durations.map((duration) => <option key={duration} value={duration}>{duration} hours</option>)}
+                    {getChargingDurations(bookingStart).map((duration) => <option key={duration} value={duration}>{duration} hours</option>)}
                   </select>
                 </label>
               </div>
               <div className="time-summary"><span>Charging window</span><b>{formatTime(bookingStart)} – {formatEnd(bookingDate, bookingStart, bookingHours)}</b></div>
+              <div className="parking-window-notice">
+                <Clock3 size={14} />
+                <span>Your parking spot is reserved until <b>{formatTime(approvedParkingEnd)}</b>.</span>
+              </div>
               {selectedBookingConflicts && (
                 <div className="conflict-message" role="alert"><X size={15} /> This time overlaps another booking at this location. Try another start time.</div>
               )}
+              <aside className="idle-fee-notice" aria-label="Morning idle fee">
+                <span className="idle-fee-icon"><Clock3 size={15} /></span>
+                <span><b>Morning idle fee</b><small>Please move your vehicle by 7:00 AM. Vehicles remaining after the approved parking window are charged {formatMoney(idleFeePerMinute)}/minute starting at 7:01 AM. This conditional fee is not included in the estimate below.</small></span>
+              </aside>
               <div className="price-breakdown">
-                <div><span>{bookingHours} hours × {formatMoney(selectedLocation.rate)}/hr</span><span>{formatMoney(selectedLocation.rate * bookingHours)}</span></div>
-                <div><span>Demo reservation fee</span><span>{formatMoney(bookingFee)}</span></div>
+                <div><span>Charging · {bookingHours} hours × {formatMoney(selectedLocation.rate)}/hr</span><span>{formatMoney(chargingCost)}</span></div>
+                <div><span>Overnight parking fee</span><span>{formatMoney(parkingFee)}</span></div>
+                <div className="idle-fee-row"><span>Morning idle fee · if applicable</span><span>{formatMoney(idleFeePerMinute)}/min from 7:01 AM</span></div>
                 <div className="price-total"><b>Estimated total</b><b>{formatMoney(estimatedTotal)} <small>CAD</small></b></div>
               </div>
               <button type="button" className="confirm-button" onClick={confirmBooking} disabled={!hydrated || Boolean(selectedBookingConflicts)}>
